@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volúmenes con integrales dobles · Recintos tipo I y tipo II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Fira+Code:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f2244;--blue:#1d6fcc;--blue2:#2d82e6;--teal:#0ea5e9;--sky:#38bdf8;
+  --bg:#eef6ff;--bg2:#f8fbff;--white:#fff;
+  --g50:#f8fafc;--g100:#f1f5f9;--g200:#e2e8f0;--g300:#cbd5e1;--g400:#94a3b8;--g500:#64748b;--g600:#475569;--g700:#334155;--g800:#1e293b;
+  --ok:#059669;--ok-bg:#d1fae5;--warn:#d97706;--warn-bg:#fffbeb;
+  --violeta:#7c3aed;--tealc:#0d9488;--naranja:#ea580c;
+  --r:12px;--rl:16px;--rxl:24px;
+  --sh:0 4px 6px -1px rgba(0,0,0,.08),0 2px 4px -1px rgba(0,0,0,.05);
+  --lab-terra:#b57d4c;--lab-blue:#415a8e;--lab-dark:#20201c;--lab-cream:#faf8f1;--lab-gray:#6579a1;
+  --f-body:'Outfit',sans-serif;--f-disp:'Fraunces',Georgia,serif;--f-mono:'Fira Code',monospace;
+  --f-math:'STIX Two Text','STIXGeneral','Times New Roman',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--g800);font-family:var(--f-body);font-size:14px;line-height:1.65}
+h1,h2,h3{font-family:var(--f-disp);font-weight:400;color:var(--navy);margin:0 0 .4em}
+h2{font-size:1.9rem;line-height:1.15}
+h3{font-size:1.25rem}
+p{margin:.4em 0 .8em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.narrow{max-width:800px;margin:0 auto}
+
+/* ===== chrome oficial ===== */
+.topbar{background:linear-gradient(135deg,var(--navy) 0%,#1a3a6e 100%);color:#e0f2fe;padding:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.topbar-inner{max-width:1080px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-inspt{font-size:12px;color:#7dd3fc;letter-spacing:.1em;font-weight:700}
+.brand-title{font-family:'Fraunces',serif;font-size:18px;color:#fff;font-weight:700}
+.brand-sub{font-size:12px;color:#bfdbfe}
+.lab-logo{background:var(--lab-cream);padding:8px 18px 7px;border-radius:12px;text-align:left;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.lab-name{display:flex;align-items:center;font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.2}
+.lab-name .bullet{width:8px;height:8px;border-radius:50%;background:var(--lab-terra);flex-shrink:0;margin-right:7px}
+.lab-name .lab{color:var(--lab-dark)}.lab-name .best{color:var(--lab-terra)}.lab-name .ia{color:var(--lab-blue)}
+.lab-sub{color:var(--lab-gray);font-size:11px;font-weight:500;margin-top:1px;padding-left:15px;font-family:'Outfit',sans-serif}
+.site-footer{background:var(--navy);color:#cbd5e1;padding:30px 0 24px;margin-top:40px}
+.footer-inner{max-width:1080px;margin:0 auto;padding:0 20px;text-align:center}
+.footer-quote{font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:#e0f2fe;margin-bottom:16px}
+.footer-lab{display:inline-block;background:var(--lab-cream);padding:10px 22px 9px;border-radius:12px;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.footer-lab .lab-name{display:flex;align-items:center;font-family:'Fraunces',Georgia,serif;font-size:17px;font-weight:700;line-height:1.2}
+.footer-lab .bullet{width:8px;height:8px;border-radius:50%;background:var(--lab-terra);flex-shrink:0;margin-right:7px}
+.footer-lab .lab{color:var(--lab-dark)}.footer-lab .best{color:var(--lab-terra)}.footer-lab .ia{color:var(--lab-blue)}
+.footer-lab .lab-sub{color:var(--lab-gray);font-size:12px;font-weight:500;margin-top:1px;padding-left:15px;font-family:'Outfit',sans-serif}
+
+/* ===== banner ===== */
+.banner{background:linear-gradient(120deg,#0d2559,#16428f 48%,#1f57b4);color:#fff;border-radius:var(--rxl);padding:28px 30px;margin:26px 0 22px;box-shadow:var(--sh)}
+.banner .kick{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#93c5fd;margin-bottom:6px}
+.banner h1{color:#fff;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.1;margin:0 0 .35em}
+.banner p{color:#dbeafe;max-width:700px;margin:0}
+
+/* ===== tarjetas ===== */
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--rl);box-shadow:var(--sh);padding:22px 24px;margin:0 0 18px}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);background:#e8f1fd;border-radius:6px;padding:3px 9px;margin-bottom:8px;font-weight:500}
+.box{border-radius:var(--r);padding:14px 16px;margin:12px 0}
+.box.def{background:#f1f7ff;border-left:4px solid var(--blue)}
+.box.voz{background:var(--warn-bg);border-left:4px solid var(--warn)}
+.box .bt{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g600);margin-bottom:6px;font-weight:500}
+.box.def .bt{color:var(--blue)}
+.box.voz .bt{color:#b45309}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.cols2{grid-template-columns:1fr}}
+.small{font-size:12px;color:var(--g500)}
+ul.lista{padding-left:20px;margin:.3em 0 .8em}
+ul.lista li{margin:.25em 0}
+
+/* ===== matemática CSS (STIX Two Text) ===== */
+.mi,.md,.calc{font-family:var(--f-math);font-style:normal}
+.mi{font-size:1.06em;white-space:nowrap;padding:0 .08em}
+.md{display:block;font-size:1.18em;margin:.5em 0;text-align:center;overflow-x:auto;overflow-y:hidden!important;padding:.2em 0}
+.md .nb{display:inline-block;white-space:nowrap;vertical-align:middle}
+.mi i,.md i,.calc i{font-style:italic}
+.ro{font-style:normal}
+.fr{display:inline-flex;flex-direction:column;text-align:center;margin:0 .14em;vertical-align:middle;line-height:1.15}
+.fr .fn{padding:0 .4em .1em}
+.fr .fd{padding:.12em .4em 0;border-top:1.5px solid currentColor}
+sub,sup{font-size:.72em;line-height:0;vertical-align:baseline;position:relative}
+sub{top:.34em}sup{top:-.48em}
+.at{display:inline-block;white-space:nowrap}
+.sq{display:inline-flex;align-items:stretch;vertical-align:middle;margin:0 .08em}
+.sq>svg{width:.6em;min-width:8px;align-self:stretch;height:auto;overflow:visible;flex-shrink:0}
+.sq-b{display:inline-flex;align-items:center;border-top:1.4px solid currentColor;padding:.1em .28em .06em .1em}
+.os{margin:0 .26em}.ob{margin:0 .15em}.ou{margin-right:.02em}.pc{margin-right:.22em}.psc{margin:0 .16em}.gap{display:inline-block;width:1.7em}
+.mi .os{margin:0 .2em}.mi .ob{margin:0 .12em}
+.itg{display:inline-flex;align-items:center;vertical-align:middle}
+.itg .ig{font-size:1.75em;line-height:1;font-weight:400}
+.itg .lims{display:inline-flex;flex-direction:column;justify-content:space-between;font-size:.68em;line-height:1.05;margin:0 .18em 0 .02em;height:2.2em}
+.itg .lims .lh{align-self:flex-start}
+.itg .lims .ll{align-self:flex-end}
+.itg .lims.uno{justify-content:flex-end}
+.par{display:inline-flex;align-items:center;vertical-align:middle}
+.par>.pw{position:relative;width:.42em;min-width:6px;align-self:stretch}
+.par>.pw>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.par>.pb{display:inline-flex;align-items:center;white-space:nowrap;padding:0 .05em}
+.dyn{color:var(--navy)}
+.num{font-feature-settings:"tnum"}
+
+/* ===== laboratorio ===== */
+.labo{background:#fff;border:1px solid var(--g200);border-radius:var(--rl);box-shadow:var(--sh);padding:18px 20px;margin:0 0 18px}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:12px}
+.ctrl{display:flex;flex-direction:column;gap:3px}
+.ctrl label{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g500)}
+select{font-family:var(--f-body);font-size:13.5px;padding:7px 10px;border:1px solid var(--g300);border-radius:8px;background:#fff;color:var(--g800);min-width:200px}
+.seg{display:inline-flex;border:1px solid var(--g300);border-radius:8px;overflow:hidden}
+.seg button{font-family:var(--f-body);font-size:13px;padding:7px 12px;border:0;background:#fff;color:var(--g700);cursor:pointer;font-weight:500}
+.seg button.on{background:var(--blue);color:#fff}
+.seg button[disabled]{color:var(--g300);cursor:not-allowed}
+.btn{font-family:var(--f-body);font-size:13px;font-weight:600;padding:8px 14px;border:1px solid var(--g300);border-radius:8px;background:#fff;color:var(--g700);cursor:pointer}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn:hover{filter:brightness(.97)}
+.play{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:8px 0 12px;padding:10px 12px;background:var(--bg2);border:1px solid var(--g200);border-radius:var(--r)}
+.play input[type=range]{flex:1;min-width:160px;accent-color:var(--blue)}
+.play .vel{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g600)}
+.play .vel input{width:90px;accent-color:var(--blue)}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:14px}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.cv-w{position:relative;border:1px solid var(--g200);border-radius:var(--r);background:#fff;overflow:hidden}
+.cv-w canvas{display:block;width:100%;touch-action:none}
+.cv-w .cap{position:absolute;left:10px;top:8px;font-family:var(--f-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g500);background:rgba(255,255,255,.85);padding:2px 6px;border-radius:4px;pointer-events:none}
+.cv-w .vistas{position:absolute;right:8px;top:8px;display:flex;gap:4px}
+.cv-w .vistas button{font-family:var(--f-body);font-size:11px;padding:4px 8px;border:1px solid var(--g300);border-radius:6px;background:rgba(255,255,255,.92);color:var(--g700);cursor:pointer}
+.cv-w .vistas button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cv-w .nota{position:absolute;right:10px;bottom:8px;max-width:60%;text-align:right;font-size:11px;color:var(--g500);background:rgba(255,255,255,.85);padding:2px 6px;border-radius:4px;pointer-events:none}
+.side{display:flex;flex-direction:column;gap:12px}
+.panel{border:1px solid var(--g200);border-radius:var(--r);padding:12px 14px;background:var(--bg2)}
+.panel .pt{font-family:var(--f-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g500);margin-bottom:6px}
+.panel .ln{margin:.35em 0;line-height:1.7}
+.panel .md{margin:.3em 0;font-size:1.1em;text-align:left}
+.tot{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;margin-top:6px;padding-top:8px;border-top:1px dashed var(--g300)}
+.tot .k{font-size:11px;color:var(--g500);text-transform:uppercase;letter-spacing:.08em;font-family:var(--f-mono)}
+.tot .v{font-family:var(--f-math);font-size:1.15em;color:var(--navy)}
+.barra{height:8px;background:var(--g200);border-radius:4px;overflow:hidden;margin-top:6px}
+.barra>div{height:100%;background:linear-gradient(90deg,var(--naranja),#f59e0b);width:0}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--g600);margin-top:8px}
+.leyenda span{display:inline-flex;align-items:center;gap:5px}
+.leyenda i{display:inline-block;width:14px;height:10px;border-radius:2px}
+.pasos{counter-reset:p;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0 4px}
+.paso{background:var(--bg2);border:1px solid var(--g200);border-radius:var(--r);padding:12px 14px 10px;position:relative}
+.paso::before{counter-increment:p;content:counter(p);position:absolute;top:-10px;left:12px;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--f-mono);font-size:11px;display:flex;align-items:center;justify-content:center}
+.paso b{display:block;font-weight:600;color:var(--navy);margin:2px 0 4px}
+.paso p{margin:0;font-size:13px}
+details{border:1px solid var(--g200);border-radius:var(--r);background:var(--bg2);margin:10px 0;padding:0}
+summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;align-items:center;gap:8px}
+summary::before{content:"▸";color:var(--blue);transition:transform .2s}
+details[open] summary::before{transform:rotate(90deg)}
+details .cont{padding:4px 16px 14px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:#e8f1fd;color:var(--blue);font-weight:600;margin-left:6px;vertical-align:middle}
+.chip.II{background:#ecfdf5;color:var(--ok)}
+.chip.amb{background:#f5f3ff;color:var(--violeta)}
+table.tab{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}
+table.tab th,table.tab td{border:1px solid var(--g200);padding:6px 10px;text-align:left;vertical-align:middle}
+table.tab th{background:var(--g50);font-weight:600;color:var(--g700)}
+@media (max-width:600px){.labo{padding:14px 12px}.card{padding:16px 16px}select{min-width:160px}.cv-w .vistas{top:32px}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div>
+        <div class="brand-inspt">I·N·S·P·T &nbsp;·&nbsp; UTN</div>
+        <div class="brand-title">Volúmenes con integrales dobles · Recintos tipo I y tipo II</div>
+        <div class="brand-sub">Análisis Matemático II</div>
+      </div>
+    </div>
+    <div class="lab-logo">
+      <div class="lab-name"><span class="bullet"></span><span class="lab">laboratorio</span><span class="best">best</span><span class="ia">-IA</span></div>
+      <div class="lab-sub">Prof. Ariel L. Cardozo Delgado</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="banner">
+  <div class="kick">Unidad 5 · Integrales dobles · Animación</div>
+  <h1>Cómo se forma el volumen, rebanada a rebanada</h1>
+  <p>Elegí un techo <span class="mi"><i>z</i><span class="os">=</span><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)</span> y un recinto <span class="mi"><i>R</i></span> del plano. La animación barre el recinto con franjas, levanta sobre cada franja una rebanada hasta el techo y las va sumando: eso es la integral iterada. En un recinto tipo I las franjas son verticales (se integra primero en <span class="mi"><i>y</i></span>); en uno tipo II son horizontales (se integra primero en <span class="mi"><i>x</i></span>).</p>
+</div>
+
+<section class="card narrow">
+  <span class="badge">Antes de mirar</span>
+  <h2>Dos maneras de cortar el mismo sólido</h2>
+  <p>El sólido es siempre el mismo: está entre el recinto <span class="mi"><i>R</i></span>, apoyado en el piso <span class="mi"><i>z</i><span class="os">=</span>0</span>, y el techo <span class="mi"><i>z</i><span class="os">=</span><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)</span>, con <span class="mi"><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)<span class="os">≥</span>0</span> en todo <span class="mi"><i>R</i></span>. Lo que cambia entre tipo I y tipo II es con qué cuchillo lo cortamos.</p>
+  <div class="cols2">
+    <div class="box def">
+      <span class="bt">Recinto tipo I · franjas verticales</span>
+      <div class="md"><span class="nb"><i>a</i><span class="os">≤</span><i>x</i><span class="os">≤</span><i>b</i></span><span class="gap"></span><span class="nb"><i>g</i><sub>1</sub>(<i>x</i>)<span class="os">≤</span><i>y</i><span class="os">≤</span><i>g</i><sub>2</sub>(<i>x</i>)</span></div>
+      <div class="md"><span class="nb"><i>V</i><span class="os">=</span><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>b</i></span><span class="ll"><i>a</i></span></span></span><span class="par"><span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M8.5 1.5 C2 22 2 78 8.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span><span class="pb"><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>g</i><sub>2</sub>(<i>x</i>)</span><span class="ll"><i>g</i><sub>1</sub>(<i>x</i>)</span></span></span><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)<span class="ro">&thinsp;d</span><i>y</i></span><span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 1.5 C8 22 8 78 1.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span></span><span class="ro">&thinsp;d</span><i>x</i></span></div>
+      <p class="small" style="margin:0">Con <span class="mi"><i>x</i></span> fija, la integral de adentro es el área <span class="mi"><i>A</i>(<i>x</i>)</span> de la rebanada. Después se suman las áreas: <span class="mi"><i>V</i><span class="os">=</span><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>b</i></span><span class="ll"><i>a</i></span></span></span><i>A</i>(<i>x</i>)<span class="ro">&thinsp;d</span><i>x</i></span>.</p>
+    </div>
+    <div class="box def">
+      <span class="bt">Recinto tipo II · franjas horizontales</span>
+      <div class="md"><span class="nb"><i>c</i><span class="os">≤</span><i>y</i><span class="os">≤</span><i>d</i></span><span class="gap"></span><span class="nb"><i>h</i><sub>1</sub>(<i>y</i>)<span class="os">≤</span><i>x</i><span class="os">≤</span><i>h</i><sub>2</sub>(<i>y</i>)</span></div>
+      <div class="md"><span class="nb"><i>V</i><span class="os">=</span><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>d</i></span><span class="ll"><i>c</i></span></span></span><span class="par"><span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M8.5 1.5 C2 22 2 78 8.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span><span class="pb"><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>h</i><sub>2</sub>(<i>y</i>)</span><span class="ll"><i>h</i><sub>1</sub>(<i>y</i>)</span></span></span><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)<span class="ro">&thinsp;d</span><i>x</i></span><span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 1.5 C8 22 8 78 1.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span></span><span class="ro">&thinsp;d</span><i>y</i></span></div>
+      <p class="small" style="margin:0">Con <span class="mi"><i>y</i></span> fija, la integral de adentro es el área <span class="mi"><i>A</i>(<i>y</i>)</span> de la rebanada. Después se suman: <span class="mi"><i>V</i><span class="os">=</span><span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh"><i>d</i></span><span class="ll"><i>c</i></span></span></span><i>A</i>(<i>y</i>)<span class="ro">&thinsp;d</span><i>y</i></span>.</p>
+    </div>
+  </div>
+  <div class="pasos">
+    <div class="paso"><b>El piso</b><p>El recinto <span class="mi"><i>R</i></span>, sombreado en el plano <span class="mi"><i>z</i><span class="os">=</span>0</span>. Sus curvas borde son las funciones de los límites de adentro.</p></div>
+    <div class="paso"><b>El techo</b><p>La superficie <span class="mi"><i>z</i><span class="os">=</span><i>f</i>(<i>x</i><span class="psc">;</span><i>y</i>)</span>, dibujada solo sobre <span class="mi"><i>R</i></span>. Lo que todavía no se barrió se ve transparente.</p></div>
+    <div class="paso"><b>La rebanada</b><p>La lámina naranja: se apoya en una franja del piso y llega hasta el techo. Su área es la integral de adentro.</p></div>
+    <div class="paso"><b>La suma</b><p>Las rebanadas ya barridas forman el sólido. La integral de afuera suma sus áreas: el volumen crece hasta <span class="mi"><i>V</i></span>.</p></div>
+  </div>
+</section>
+
+<section class="labo" id="lab">
+  <span class="badge">Laboratorio</span>
+  <h2>Animación del volumen</h2>
+  <div class="ctrls">
+    <div class="ctrl"><label for="selF">Techo z = f(x ; y)</label><select id="selF"></select></div>
+    <div class="ctrl"><label for="selR">Recinto R</label><select id="selR"></select></div>
+    <div class="ctrl"><label>Cómo cortar</label>
+      <div class="seg" id="segO">
+        <button data-orden="I">Tipo I · franjas verticales</button>
+        <button data-orden="II">Tipo II · franjas horizontales</button>
+      </div>
+    </div>
+  </div>
+  <div class="play">
+    <button class="btn primary" id="btnPlay" data-act="play">▶ Animar</button>
+    <button class="btn" data-act="reset">↺ Volver al inicio</button>
+    <input type="range" id="rngT" min="0" max="1000" value="0" aria-label="Posición de la rebanada">
+    <div class="vel">velocidad <input type="range" id="rngV" min="1" max="10" value="4" aria-label="Velocidad"></div>
+  </div>
+  <div class="grid">
+    <div class="cv-w">
+      <canvas id="cv3" data-h="430"></canvas>
+      <span class="cap">Sólido · arrastrá para girar</span>
+      <div class="vistas">
+        <button data-vista="3d" class="on">3D</button>
+        <button data-vista="perfil">De frente a la rebanada</button>
+        <button data-vista="arriba">Desde arriba</button>
+      </div>
+      <span class="nota" id="nota3"></span>
+    </div>
+    <div class="side">
+      <div class="cv-w"><canvas id="cv2" data-h="230"></canvas><span class="cap">El recinto R y la franja</span></div>
+      <div class="cv-w"><canvas id="cvA" data-h="170"></canvas><span class="cap" id="capA">Área de cada rebanada</span></div>
+    </div>
+  </div>
+  <div class="leyenda">
+    <span><i style="background:#bfdbfe;border:1px solid #60a5fa"></i>recinto R en el piso</span>
+    <span><i style="background:linear-gradient(90deg,#2a6bb3,#e8f4d4)"></i>techo ya barrido</span>
+    <span><i style="background:#e2e8f0;border:1px dashed #94a3b8"></i>techo sin barrer</span>
+    <span><i style="background:#fb923c"></i>rebanada actual</span>
+    <span><i style="background:#fed7aa"></i>volumen acumulado (bajo A)</span>
+    <span><i style="background:#7c3aed"></i>límite inferior</span>
+    <span><i style="background:#0d9488"></i>límite superior</span>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="panel" id="pnlDesc"></div>
+    <div class="panel" id="pnlVal"></div>
+  </div>
+</section>
+
+<section class="card narrow">
+  <span class="badge">Para mirar con atención</span>
+  <h2>Qué conviene observar en cada recinto</h2>
+  <details open>
+    <summary>Cuando los dos cortes son posibles, el volumen es el mismo</summary>
+    <div class="cont"><p>En el rectángulo, en el recinto entre <span class="mi"><i>y</i><span class="os">=</span><i>x</i><sup>2</sup></span> e <span class="mi"><i>y</i><span class="os">=</span>2<i>x</i></span>, y en el recinto <span class="mi">0<span class="os">≤</span><i>x</i><span class="os">≤</span>4<span class="ob">−</span><i>y</i><sup>2</sup></span> se puede elegir tipo I o tipo II. Cambiá el corte con la misma superficie: las rebanadas son distintas, la función <span class="mi"><i>A</i></span> es distinta, pero el total <span class="mi"><i>V</i></span> coincide. Es el teorema de Fubini: cambiar el orden de integración es solo cambiar la descripción del mismo recinto.</p></div>
+  </details>
+  <details>
+    <summary>Cuando un corte obliga a partir el recinto en dos</summary>
+    <div class="cont"><p>El recinto entre <span class="mi"><i>y</i><span class="os">=</span><i>x</i><sup>2</sup></span> e <span class="mi"><i>y</i><span class="os">=</span>2<span class="ob">−</span><i>x</i></span> (de <span class="mi"><i>x</i><span class="os">=</span><span class="ou">−</span>2</span> a <span class="mi"><i>x</i><span class="os">=</span>1</span>) es tipo I con una sola descripción. Mirado con franjas horizontales, la franja que está a altura <span class="mi"><i>y</i><span class="os">&lt;</span>1</span> termina en la parábola de los dos lados, pero la que está a altura <span class="mi"><i>y</i><span class="os">&gt;</span>1</span> termina en la parábola a la izquierda y en la recta a la derecha: el límite superior cambia de fórmula en <span class="mi"><i>y</i><span class="os">=</span>1</span> y habría que escribir dos integrales. Lo mismo le pasa, con los papeles cambiados, al recinto entre <span class="mi"><i>x</i><span class="os">=</span><i>y</i><sup>2</sup></span> y <span class="mi"><i>x</i><span class="os">=</span><i>y</i><span class="ob">+</span>2</span>. Por eso en esos dos recintos la animación ofrece un solo corte.</p></div>
+  </details>
+  <details>
+    <summary>Cuando el techo vale 1, el volumen es el área</summary>
+    <div class="cont"><p>Con <span class="mi"><i>z</i><span class="os">=</span>1</span> cada rebanada es un rectángulo de altura 1 y su área es el largo de la franja. Sumar esas áreas da el área del recinto: <span class="mi"><span class="itg"><span class="ig">∬</span><span class="lims uno"><span class="ll"><i>R</i></span></span></span>1<span class="ro">&thinsp;d</span><i>A</i><span class="os">=</span><span class="ro">área</span>(<i>R</i>)</span>. Es la misma idea que en Análisis I: el área entre dos curvas es la integral de la diferencia <span class="mi"><i>g</i><sub>2</sub>(<i>x</i>)<span class="ob">−</span><i>g</i><sub>1</sub>(<i>x</i>)</span>.</p></div>
+  </details>
+  <details>
+    <summary>Cuando el techo depende de una sola variable</summary>
+    <div class="cont"><p>Probá el recinto <span class="mi">0<span class="os">≤</span><i>x</i><span class="os">≤</span>4<span class="ob">−</span><i>y</i><sup>2</sup></span> con el plano <span class="mi"><i>z</i><span class="os">=</span><i>x</i><span class="ob">+</span><i>y</i><span class="ob">+</span>2</span> en los dos cortes. Con franjas horizontales la rebanada es un trapecio (el techo es lineal en <span class="mi"><i>x</i></span>) y su área sale sin integrar; con franjas verticales el límite trae una raíz y la cuenta es más larga. Elegir bien el orden no cambia el resultado, pero sí el trabajo.</p></div>
+  </details>
+</section>
+
+<section class="card narrow">
+  <span class="badge">Lo esencial</span>
+  <h2>En una frase</h2>
+  <ul class="lista">
+    <li><b>La integral de adentro</b> es el área de una rebanada: se calcula con la variable de afuera fija, entre las dos curvas borde del recinto.</li>
+    <li><b>La integral de afuera</b> suma las áreas de todas las rebanadas, desde el primer extremo hasta el último: esa suma es el volumen.</li>
+    <li><b>Tipo I</b>: franjas verticales, límites de adentro en <span class="mi"><i>y</i></span>, afuera en <span class="mi"><i>x</i></span>. <b>Tipo II</b>: franjas horizontales, límites de adentro en <span class="mi"><i>x</i></span>, afuera en <span class="mi"><i>y</i></span>.</li>
+    <li>Si el recinto admite las dos descripciones, los dos órdenes dan el mismo <span class="mi"><i>V</i></span>; si una descripción obliga a partir el recinto, conviene la otra.</li>
+    <li>Todo esto es volumen solo si <span class="mi"><i>f</i><span class="os">≥</span>0</span> en todo <span class="mi"><i>R</i></span>. En esta animación todos los techos cumplen esa condición.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-quote">"La matemática no exige genios, exige constancia."</div>
+    <div class="footer-lab">
+      <div class="lab-name"><span class="bullet"></span><span class="lab">laboratorio</span><span class="best">best</span><span class="ia">-IA</span></div>
+      <div class="lab-sub">Prof. Ariel L. Cardozo Delgado</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+/* =====================================================================
+   UTILIDADES
+   ===================================================================== */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+// número con coma decimal y menos Unicode
+function fmt(v,d){
+  if(d===undefined) d=3;
+  if(!isFinite(v)) return '—';
+  let s=Math.abs(v).toFixed(d);
+  if(d>0) s=s.replace(/\.?0+$/,'');
+  s=s.replace('.',',');
+  return (v<-1e-12?'−':'')+s;
+}
+const fmtN=(v,d)=>'<span class="num">'+fmt(v,d)+'</span>';
+function escala(a,b,n){ // marcas redondas entre a y b
+  const raw=(b-a)/n, p=Math.pow(10,Math.floor(Math.log10(raw)));
+  const pasos=[1,2,2.5,5,10]; let paso=p;
+  for(const q of pasos){ if(raw<=q*p){paso=q*p;break;} }
+  const out=[]; for(let v=Math.ceil(a/paso-1e-9)*paso; v<=b+1e-9; v+=paso) out.push(Math.round(v*1e9)/1e9);
+  return out;
+}
+// radical SVG
+const RAD='<span class="sq"><svg viewBox="0 0 10 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0.6 14.5 L2.8 14.5 L5.2 22.4 L9.4 1.2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><span class="sq-b">';
+const sq=h=>RAD+h+'</span></span>';
+const fr=(n,d)=>'<span class="fr"><span class="fn">'+n+'</span><span class="fd">'+d+'</span></span>';
+const V=s=>'<i>'+s+'</i>';
+const PAR_L='<span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M8.5 1.5 C2 22 2 78 8.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span>';
+const PAR_R='<span class="pw"><svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="M1.5 1.5 C8 22 8 78 1.5 98.5" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg></span>';
+const par=h=>'<span class="par">'+PAR_L+'<span class="pb">'+h+'</span>'+PAR_R+'</span>';
+const INT=(lo,hi)=>'<span class="itg"><span class="ig">∫</span><span class="lims"><span class="lh">'+hi+'</span><span class="ll">'+lo+'</span></span></span>';
+const INT2='<span class="itg"><span class="ig">∬</span><span class="lims uno"><span class="ll"><i>R</i></span></span></span>';
+const D=v=>'<span class="ro">&thinsp;d</span><i>'+v+'</i>';
+const OS=s=>'<span class="os">'+s+'</span>', OB=s=>'<span class="ob">'+s+'</span>', OU=s=>'<span class="ou">'+s+'</span>';
+const num=v=>(v<0?OU('−'):'')+'<span class="num">'+fmt(Math.abs(v))+'</span>';
+const pot2=v=>'<span class="at">'+par2(v)+'<sup>2</sup></span>';
+const par2=v=>v<0?'('+OU('−')+fmt(Math.abs(v))+')':fmt(v);
+const fxy=V('f')+'('+V('x')+'<span class="psc">;</span>'+V('y')+')';
+
+/* =====================================================================
+   TECHOS
+   ===================================================================== */
+const TECHOS=[
+ {id:'f1',nombre:'z = 1 (constante)',f:(x,y)=>1,
+  html:V('z')+OS('=')+'1',
+  sub:(x,y)=>'1'},
+ {id:'f2',nombre:'z = x + y + 2 (plano)',f:(x,y)=>x+y+2,
+  html:V('z')+OS('=')+V('x')+OB('+')+V('y')+OB('+')+'2',
+  sub:(x,y)=>null},
+ {id:'f3',nombre:'',f:(x,y)=>5-(x*x+y*y)/4,
+  html:V('z')+OS('=')+'5'+OB('−')+fr('<span class="at">'+V('x')+'<sup>2</sup></span>'+OB('+')+'<span class="at">'+V('y')+'<sup>2</sup></span>','4'),
+  sub:(x,y)=>null},
+ {id:'f4',nombre:'',f:(x,y)=>(x*x+y*y)/4+1,
+  html:V('z')+OS('=')+fr('<span class="at">'+V('x')+'<sup>2</sup></span>'+OB('+')+'<span class="at">'+V('y')+'<sup>2</sup></span>','4')+OB('+')+'1',
+  sub:(x,y)=>null}
+];
+// nombres de las opciones con el menos Unicode
+TECHOS[2].nombre='z = 5 − ¼·(x² + y²)  (paraboloide invertido)'; TECHOS[3].nombre='z = ¼·(x² + y²) + 1  (paraboloide)';
+
+/* =====================================================================
+   RECINTOS
+   Cada descripción: tipo I barre x (franjas verticales, y de lo a up);
+   tipo II barre y (franjas horizontales, x de lo a up).
+   lo(s), up(s): valor; loH/upH: fórmula; loS(s)/upS(s): desarrollo sustituido.
+   ===================================================================== */
+const X2=V('x')+'<sup>2</sup>', Y2=V('y')+'<sup>2</sup>';
+const cte=c=>({v:()=>c,h:fmt(c),s:()=>null});
+const RECINTOS=[
+ {id:'rect',nombre:'Rectángulo [0 ; 2] × [0 ; 2]',bx:[0,2],by:[0,2],
+  titulo:'el rectángulo '+'[0<span class="psc">;</span>2]<span class="ob">×</span>[0<span class="psc">;</span>2]',
+  curvas:[{t:'y',f:x=>0,r:[0,2],c:'#7c3aed',lt:'y = 0'},{t:'y',f:x=>2,r:[0,2],c:'#0d9488',lt:'y = 2'},
+          {t:'x',f:y=>0,r:[0,2],c:'#94a3b8'},{t:'x',f:y=>2,r:[0,2],c:'#94a3b8'}],
+  desc:{I:{a:0,b:2,lo:cte(0),up:cte(2)},II:{a:0,b:2,lo:cte(0),up:cte(2)}}},
+ {id:'r1',nombre:'Entre y = x² e y = 2 − x',bx:[-2,1],by:[0,4],
+  titulo:'el recinto entre '+V('y')+OS('=')+'<span class="at">'+X2+'</span> e '+V('y')+OS('=')+'2'+OB('−')+V('x'),
+  curvas:[{t:'y',f:x=>x*x,r:[-2,1],c:'#7c3aed',lt:'y = x²',pos:0.78},{t:'y',f:x=>2-x,r:[-2,1],c:'#0d9488',lt:'y = 2 − x',pos:0.3}],
+  desc:{I:{a:-2,b:1,
+    lo:{v:x=>x*x,h:'<span class="at">'+X2+'</span>',s:x=>X2+OS('=')+pot2(x)+OS('=')+fmt(x*x)},
+    up:{v:x=>2-x,h:'2'+OB('−')+V('x'),s:x=>'2'+OB('−')+V('x')+OS('=')+'2'+OB('−')+par2(x)+OS('=')+fmt(2-x)}}},
+  soloUna:'tipo I: con franjas horizontales el borde derecho cambia de fórmula en '+V('y')+OS('=')+'1'},
+ {id:'r2',nombre:'Entre y = x² e y = 2x',bx:[0,2],by:[0,4],
+  titulo:'el recinto entre '+V('y')+OS('=')+'<span class="at">'+X2+'</span> e '+V('y')+OS('=')+'2'+V('x'),
+  curvas:[{t:'y',f:x=>x*x,r:[0,2],c:'#7c3aed',lt:'y = x²',pos:0.85},{t:'y',f:x=>2*x,r:[0,2],c:'#0d9488',lt:'y = 2x',pos:0.45}],
+  desc:{I:{a:0,b:2,
+    lo:{v:x=>x*x,h:'<span class="at">'+X2+'</span>',s:x=>X2+OS('=')+pot2(x)+OS('=')+fmt(x*x)},
+    up:{v:x=>2*x,h:'2'+V('x'),s:x=>'2'+V('x')+OS('=')+'2'+OB('·')+fmt(x)+OS('=')+fmt(2*x)}},
+   II:{a:0,b:4,
+    lo:{v:y=>y/2,h:fr(V('y'),'2'),s:y=>fr(V('y'),'2')+OS('=')+fr(fmt(y),'2')+OS('=')+fmt(y/2)},
+    up:{v:y=>Math.sqrt(y),h:sq(V('y')),s:y=>sq(V('y'))+OS('=')+sq(fmt(y))+OS('≈')+fmt(Math.sqrt(y))}}},
+  curvasII:[{t:'x',f:y=>y/2,r:[0,4],c:'#7c3aed',lt:'x = y/2',pos:0.6},{t:'x',f:y=>Math.sqrt(y),r:[0,4],c:'#0d9488',lt:'x = √y',pos:0.4}]},
+ {id:'r3',nombre:'Entre x = y² y x = y + 2',bx:[0,4],by:[-1,2],
+  titulo:'el recinto entre '+V('x')+OS('=')+'<span class="at">'+Y2+'</span> y '+V('x')+OS('=')+V('y')+OB('+')+'2',
+  curvas:[{t:'x',f:y=>y*y,r:[-1,2],c:'#7c3aed',lt:'x = y²',pos:0.85},{t:'x',f:y=>y+2,r:[-1,2],c:'#0d9488',lt:'x = y + 2',pos:0.45}],
+  desc:{II:{a:-1,b:2,
+    lo:{v:y=>y*y,h:'<span class="at">'+Y2+'</span>',s:y=>Y2+OS('=')+pot2(y)+OS('=')+fmt(y*y)},
+    up:{v:y=>y+2,h:V('y')+OB('+')+'2',s:y=>V('y')+OB('+')+'2'+OS('=')+par2(y)+OB('+')+'2'+OS('=')+fmt(y+2)}}},
+  soloUna:'tipo II: con franjas verticales el borde superior cambia de fórmula en '+V('x')+OS('=')+'1'},
+ {id:'r4',nombre:'0 ≤ x ≤ 4 − y²  (−2 ≤ y ≤ 2)',bx:[0,4],by:[-2,2],
+  titulo:'el recinto '+'0'+OS('≤')+V('x')+OS('≤')+'4'+OB('−')+'<span class="at">'+Y2+'</span>',
+  curvas:[{t:'x',f:y=>0,r:[-2,2],c:'#7c3aed',lt:'x = 0',pos:0.5},{t:'x',f:y=>4-y*y,r:[-2,2],c:'#0d9488',lt:'x = 4 − y²',pos:0.3}],
+  desc:{II:{a:-2,b:2,
+    lo:cte(0),
+    up:{v:y=>4-y*y,h:'4'+OB('−')+'<span class="at">'+Y2+'</span>',s:y=>'4'+OB('−')+Y2+OS('=')+'4'+OB('−')+pot2(y)+OS('=')+'4'+OB('−')+fmt(y*y)+OS('=')+fmt(4-y*y)}},
+   I:{a:0,b:4,
+    lo:{v:x=>-Math.sqrt(4-x),h:OU('−')+sq('4'+OB('−')+V('x')),s:x=>OU('−')+sq('4'+OB('−')+V('x'))+OS('=')+OU('−')+sq('4'+OB('−')+fmt(x))+OS('=')+OU('−')+sq(fmt(4-x))+OS('≈')+num(-Math.sqrt(4-x))},
+    up:{v:x=>Math.sqrt(4-x),h:sq('4'+OB('−')+V('x')),s:x=>sq('4'+OB('−')+V('x'))+OS('=')+sq('4'+OB('−')+fmt(x))+OS('=')+sq(fmt(4-x))+OS('≈')+fmt(Math.sqrt(4-x))}}},
+  curvasI:[{t:'y',f:x=>-Math.sqrt(4-x),r:[0,4],c:'#7c3aed',lt:'y = −√(4 − x)',pos:0.35},{t:'y',f:x=>Math.sqrt(4-x),r:[0,4],c:'#0d9488',lt:'y = √(4 − x)',pos:0.35}]}
+];
+
+/* volúmenes exactos (SymPy) para el autotest y para mostrar la fracción */
+const EXACTO={
+ 'rect|f1':'4','rect|f2':'16','rect|f3':fr('52','3'),'rect|f4':fr('20','3'),
+ 'r1|f1':fr('9','2'),'r1|f2':fr('279','20'),'r1|f3':fr('2511','140'),'r1|f4':fr('1269','140'),
+ 'r2|f1':fr('4','3'),'r2|f2':fr('92','15'),'r2|f3':fr('538','105'),'r2|f4':fr('302','105'),
+ 'r3|f1':fr('9','2'),'r3|f2':fr('369','20'),'r3|f3':fr('2511','140'),'r3|f4':fr('1269','140'),
+ 'r4|f1':fr('32','3'),'r4|f2':fr('192','5'),'r4|f3':fr('4352','105'),'r4|f4':fr('2368','105')};
+const EXACTO_NUM={'rect|f1':4,'rect|f2':16,'rect|f3':52/3,'rect|f4':20/3,'r1|f1':4.5,'r1|f2':13.95,'r1|f3':2511/140,'r1|f4':1269/140,
+ 'r2|f1':4/3,'r2|f2':92/15,'r2|f3':538/105,'r2|f4':302/105,'r3|f1':4.5,'r3|f2':18.45,'r3|f3':2511/140,'r3|f4':1269/140,
+ 'r4|f1':32/3,'r4|f2':38.4,'r4|f3':4352/105,'r4|f4':2368/105};
+
+/* =====================================================================
+   ESTADO Y CÁLCULO
+   ===================================================================== */
+const st={techo:TECHOS[1],rec:RECINTOS[1],orden:'I',t:0,play:false,vel:4,vista:'3d'};
+let modelo=null; // caché de A(s), acumulado, zmax para la combinación actual
+
+function punto(orden,s,r){ return orden==='I'?[s,r]:[r,s]; }
+function area(s){ // integral de adentro, Simpson
+  const d=st.rec.desc[st.orden], lo=d.lo.v(s), up=d.up.v(s), n=48, h=(up-lo)/n;
+  if(h<=0) return 0;
+  let S=0; for(let j=0;j<=n;j++){ const r=lo+h*j, p=punto(st.orden,s,r), v=st.techo.f(p[0],p[1]); S+=(j===0||j===n)?v:(j%2?4*v:2*v); }
+  return S*h/3;
+}
+function armarModelo(){
+  const d=st.rec.desc[st.orden], N=600, A=new Float64Array(N+1), C=new Float64Array(N+1);
+  const h=(d.b-d.a)/N; let zmax=0;
+  for(let i=0;i<=N;i++){ const s=d.a+h*i; A[i]=area(s);
+    const lo=d.lo.v(s), up=d.up.v(s); for(let j=0;j<=8;j++){ const p=punto(st.orden,s,lo+(up-lo)*j/8); zmax=Math.max(zmax,st.techo.f(p[0],p[1])); } }
+  C[0]=0; for(let i=1;i<=N;i++) C[i]=C[i-1]+(A[i-1]+A[i])*h/2;   // acumulado (trapecio fino)
+  let Amax=0; for(let i=0;i<=N;i++) Amax=Math.max(Amax,A[i]);
+  const zb=Math.max(1,Math.ceil(zmax*2)/2);
+  modelo={A,C,N,h,Amax,V:C[N],zmax,zb};
+}
+function sActual(){ const d=st.rec.desc[st.orden]; return d.a+(d.b-d.a)*st.t; }
+function interp(arr,s){ const d=st.rec.desc[st.orden]; const u=clamp((s-d.a)/(d.b-d.a),0,1)*modelo.N, i=Math.floor(u), f=u-i; return i>=modelo.N?arr[modelo.N]:arr[i]*(1-f)+arr[i+1]*f; }
+
+/* =====================================================================
+   MOTOR 3D (proyección paralela, orden del pintor)
+   ===================================================================== */
+const PALETA=[[0,[22,50,92]],[0.35,[42,107,179]],[0.7,[127,196,230]],[1,[232,244,212]]];
+function colorAltura(t,luz){ t=clamp(t,0,1);
+  for(let i=1;i<PALETA.length;i++) if(t<=PALETA[i][0]){ const [t0,c0]=PALETA[i-1],[t1,c1]=PALETA[i],u=(t-t0)/(t1-t0); return c0.map((v,k)=>Math.round((v+(c1[k]-v)*u)*luz)); }
+  return PALETA[3][1]; }
+class Vista3D{
+  constructor(cv){ this.cv=cv; this.az=-0.9; this.el=0.45; this.zesc=0.8; let arr=null; this.alMover=null;
+    cv.addEventListener('pointerdown',e=>{arr={x:e.clientX,y:e.clientY,az:this.az,el:this.el}; try{cv.setPointerCapture(e.pointerId);}catch(er){}});
+    cv.addEventListener('pointermove',e=>{ if(!arr) return; this.az=arr.az-(e.clientX-arr.x)*0.009; this.el=clamp(arr.el+(e.clientY-arr.y)*0.009,-0.05,1.5); if(this.alMover) this.alMover(); });
+    const fin=()=>{arr=null;}; ['pointerup','pointercancel','lostpointercapture'].forEach(t=>cv.addEventListener(t,fin)); }
+  preparar(r){ const cv=this.cv,dpr=window.devicePixelRatio||1,H=+cv.dataset.h||400;
+    const W=Math.max(240,Math.round(cv.clientWidth||cv.parentElement.clientWidth||520));
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); cv.style.height=H+'px';
+    const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+    Object.assign(this,{ctx,W,H,r});
+    const ca=Math.cos(this.az),sa=Math.sin(this.az),ce=Math.cos(this.el),se=Math.sin(this.el); this._t=[ca,sa,ce,se];
+    let x0=Infinity,x1=-Infinity,u0=Infinity,u1=-Infinity;
+    for(const X of [-1,1]) for(const Y of [-1,1]) for(const Z of [-this.zesc,this.zesc]){ const px=X*ca-Y*sa,up=Z*ce+(X*sa+Y*ca)*se; x0=Math.min(x0,px);x1=Math.max(x1,px);u0=Math.min(u0,up);u1=Math.max(u1,up); }
+    const mx=34,mt=30,mb=32;
+    this.s=Math.min(W/3.2,H/2.9,(W-2*mx)/(x1-x0),(H-mt-mb)/(u1-u0));
+    this.cx=W/2-this.s*(x0+x1)/2; this.cy=mt+this.s*u1+((H-mt-mb)-this.s*(u1-u0))/2; }
+  n(p){ const r=this.r; return [(p[0]-r.x[0])/(r.x[1]-r.x[0])*2-1,(p[1]-r.y[0])/(r.y[1]-r.y[0])*2-1,((p[2]-r.z[0])/(r.z[1]-r.z[0])*2-1)*this.zesc]; }
+  P(p){ const [X,Y,Z]=this.n(p),[ca,sa,ce,se]=this._t; const x1=X*ca-Y*sa,y1=X*sa+Y*ca; return [this.cx+this.s*x1,this.cy-this.s*(Z*ce+y1*se),y1*ce-Z*se]; }
+  luz(pts){ const a=this.n(pts[0]),b=this.n(pts[1]),c=this.n(pts[pts.length-1]);
+    const u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],v=[c[0]-a[0],c[1]-a[1],c[2]-a[2]];
+    const nx=u[1]*v[2]-u[2]*v[1],ny=u[2]*v[0]-u[0]*v[2],nz=u[0]*v[1]-u[1]*v[0],nn=Math.hypot(nx,ny,nz)||1;
+    return 0.6+0.4*Math.abs((-0.35*nx-0.45*ny+0.82*nz)/nn); }
+  poligono(pts,fill,stroke,lw){ const c=this.ctx; c.beginPath(); pts.forEach((p,i)=>{const q=this.P(p); i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]);}); c.closePath();
+    if(fill){c.fillStyle=fill;c.fill();} if(stroke){c.strokeStyle=stroke;c.lineWidth=lw||1;c.lineJoin='round';c.stroke();} }
+  linea(pts,color,lw,dash){ const c=this.ctx; c.beginPath(); pts.forEach((p,i)=>{const q=this.P(p); i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]);}); c.strokeStyle=color; c.lineWidth=lw||1; c.setLineDash(dash||[]); c.lineJoin='round'; c.stroke(); c.setLineDash([]); }
+  prof(pts){ let d=0; pts.forEach(p=>{d+=this.P(p)[2];}); return d/pts.length; }
+  /* piso con grilla y caja */
+  caja(){ const r=this.r,c=this.ctx,zf=r.z[0];
+    const largo=(a,b)=>{const p=this.P(a),q=this.P(b);return Math.hypot(p[0]-q[0],p[1]-q[1]);};
+    const nm=L=>L>230?4:L>130?3:2;
+    const tx=escala(r.x[0],r.x[1],nm(largo([r.x[0],r.y[0],zf],[r.x[1],r.y[0],zf]))), ty=escala(r.y[0],r.y[1],nm(largo([r.x[0],r.y[0],zf],[r.x[0],r.y[1],zf]))), tz=escala(r.z[0],r.z[1],4);
+    tx.forEach(v=>this.linea([[v,r.y[0],zf],[v,r.y[1],zf]],'#e2e8f0',1)); ty.forEach(v=>this.linea([[r.x[0],v,zf],[r.x[1],v,zf]],'#e2e8f0',1));
+    const esq=[[r.x[0],r.y[0]],[r.x[1],r.y[0]],[r.x[1],r.y[1]],[r.x[0],r.y[1]]];
+    for(let i=0;i<4;i++) this.linea([[esq[i][0],esq[i][1],zf],[esq[(i+1)%4][0],esq[(i+1)%4][1],zf]],'#94a3b8',1.2);
+    // bordes más cercanos al observador llevan las marcas
+    const dY0=this.P([(r.x[0]+r.x[1])/2,r.y[0],zf])[2],dY1=this.P([(r.x[0]+r.x[1])/2,r.y[1],zf])[2]; const yb=dY0<dY1?r.y[0]:r.y[1];
+    const dX0=this.P([r.x[0],(r.y[0]+r.y[1])/2,zf])[2],dX1=this.P([r.x[1],(r.y[0]+r.y[1])/2,zf])[2]; const xb=dX0<dX1?r.x[0]:r.x[1];
+    let izq=null; esq.forEach(e=>{const p=this.P([e[0],e[1],zf]); if(!izq||p[0]<izq.sx) izq={sx:p[0],e};}); const ez=izq.e;
+    this.linea([[ez[0],ez[1],r.z[0]],[ez[0],ez[1],r.z[1]]],'#94a3b8',1.2);
+    const Lx=largo([r.x[0],r.y[0],zf],[r.x[1],r.y[0],zf]), Ly=largo([r.x[0],r.y[0],zf],[r.x[0],r.y[1],zf]), Lz=largo([ez[0],ez[1],r.z[0]],[ez[0],ez[1],r.z[1]]);
+    this._marcas={tx,ty,tz,yb,xb,ez,zf,Lx,Ly,Lz}; }
+  rotularCaja(){ const c=this.ctx,r=this.r,M=this._marcas; if(!M) return;
+    c.font='11px Outfit, sans-serif'; c.fillStyle='#64748b'; c.textAlign='center'; c.textBaseline='middle';
+    const halo=(t,x,y,font,col)=>{ c.font=font||'11px Outfit, sans-serif'; c.lineWidth=3; c.strokeStyle='rgba(255,255,255,.9)'; c.lineJoin='round'; c.strokeText(t,x,y); c.fillStyle=col||'#64748b'; c.fillText(t,x,y); };
+    const fuera=(a,b,dist)=>{ // desplazamiento perpendicular al borde a→b, hacia afuera del centro
+      const p=this.P(a),q=this.P(b),cen=this.P([(r.x[0]+r.x[1])/2,(r.y[0]+r.y[1])/2,M.zf]);
+      let nx=-(q[1]-p[1]),ny=q[0]-p[0]; const nn=Math.hypot(nx,ny)||1; nx/=nn;ny/=nn;
+      const m=[(p[0]+q[0])/2,(p[1]+q[1])/2]; if((m[0]-cen[0])*nx+(m[1]-cen[1])*ny<0){nx=-nx;ny=-ny;} return [nx*dist,ny*dist]; };
+    const dx=fuera([r.x[0],M.yb,M.zf],[r.x[1],M.yb,M.zf],14), dy=fuera([M.xb,r.y[0],M.zf],[M.xb,r.y[1],M.zf],14);
+    if(M.Lx>40) M.tx.forEach(v=>{ if(Math.abs(v-M.ez[0])<1e-9&&Math.abs(M.yb-M.ez[1])<1e-9) return; const p=this.P([v,M.yb,M.zf]); halo(fmt(v),p[0]+dx[0],p[1]+dx[1]); });
+    if(M.Ly>40) M.ty.forEach(v=>{ if(Math.abs(v-M.ez[1])<1e-9&&Math.abs(M.xb-M.ez[0])<1e-9) return; if(Math.abs(v-M.yb)<1e-9&&M.Lx>40) return; const p=this.P([M.xb,v,M.zf]); halo(fmt(v),p[0]+dy[0],p[1]+dy[1]); });
+    if(M.Lz>40) M.tz.forEach(v=>{ if(v<=r.z[0]+1e-9) return; const p=this.P([M.ez[0],M.ez[1],v]); halo(fmt(v),p[0]-14,p[1]); });
+    if(M.Lx>40){ const ex=this.P([(r.x[0]+r.x[1])/2,M.yb,M.zf]); halo('x',ex[0]+dx[0]*2.1,ex[1]+dx[1]*2.1,'italic 14px "STIX Two Text", serif','#334155'); }
+    if(M.Ly>40){ const ey=this.P([M.xb,(r.y[0]+r.y[1])/2,M.zf]); halo('y',ey[0]+dy[0]*2.1,ey[1]+dy[1]*2.1,'italic 14px "STIX Two Text", serif','#334155');
+    }
+    if(M.Lz>40){ const ezp=this.P([M.ez[0],M.ez[1],r.z[1]]); halo('z',ezp[0]-14,ezp[1]-12,'italic 13px "STIX Two Text", serif','#334155'); } }
+}
+
+/* =====================================================================
+   DIBUJO 3D DEL SÓLIDO
+   ===================================================================== */
+const v3=new Vista3D(document.getElementById('cv3'));
+function dibujar3D(){
+  const rec=st.rec,d=rec.desc[st.orden],f=st.techo.f,o=st.orden;
+  const r={x:[rec.bx[0],rec.bx[1]],y:[rec.by[0],rec.by[1]],z:[0,modelo.zb]};
+  v3.preparar(r); const c=v3.ctx;
+  v3.caja();
+  // piso: recinto sombreado y curvas borde
+  const NB=60, borde=[];
+  for(let i=0;i<=NB;i++){ const s=d.a+(d.b-d.a)*i/NB; const p=punto(o,s,d.lo.v(s)); borde.push([p[0],p[1],0]); }
+  for(let i=NB;i>=0;i--){ const s=d.a+(d.b-d.a)*i/NB; const p=punto(o,s,d.up.v(s)); borde.push([p[0],p[1],0]); }
+  v3.poligono(borde,'rgba(191,219,254,.75)',null);
+  v3.linea(borde.slice(0,NB+1),'#7c3aed',2); v3.linea(borde.slice(NB+1),'#0d9488',2);
+  // malla
+  const s0=sActual(), N=44, M=22, hs=(d.b-d.a)/N;
+  const cols=[]; // columnas de la malla: valores de s
+  for(let i=0;i<=N;i++){ const s=d.a+hs*i; if(s<s0-1e-9) cols.push({s,b:true}); }
+  cols.push({s:s0,b:true,act:true});
+  for(let i=0;i<=N;i++){ const s=d.a+hs*i; if(s>s0+1e-9) cols.push({s,b:false}); }
+  const P3=(s,r)=>{const p=punto(o,s,r); return [p[0],p[1],f(p[0],p[1])];};
+  const P0=(s,r)=>{const p=punto(o,s,r); return [p[0],p[1],0];};
+  const fila=(s)=>{ const lo=d.lo.v(s),up=d.up.v(s),out=[]; for(let j=0;j<=M;j++) out.push(lo+(up-lo)*j/M); return out; };
+  const prims=[];
+  const zb=modelo.zb;
+  for(let i=0;i<cols.length-1;i++){
+    const sA=cols[i].s,sB=cols[i+1].s, rA=fila(sA),rB=fila(sB), barrido=cols[i].b;
+    for(let j=0;j<M;j++){
+      const q=[P3(sA,rA[j]),P3(sB,rB[j]),P3(sB,rB[j+1]),P3(sA,rA[j+1])];
+      const zm=(q[0][2]+q[1][2]+q[2][2]+q[3][2])/4;
+      if(barrido){ const col=colorAltura(zm/zb,v3.luz(q)); prims.push({pts:q,fill:'rgb('+col.join(',')+')',stroke:'rgba(15,34,68,.18)',lw:.6,d:v3.prof(q)}); }
+      else if(st.vista!=='perfil') prims.push({pts:q,fill:'rgba(203,213,225,.2)',stroke:'rgba(148,163,184,.34)',lw:.5,d:v3.prof(q)});
+    }
+    if(barrido){ // paredes laterales a lo largo de los bordes
+      const w1=[P0(sA,rA[0]),P0(sB,rB[0]),P3(sB,rB[0]),P3(sA,rA[0])], w2=[P0(sA,rA[M]),P0(sB,rB[M]),P3(sB,rB[M]),P3(sA,rA[M])];
+      prims.push({pts:w1,fill:'rgba(124,58,237,.28)',stroke:'rgba(124,58,237,.35)',lw:.5,d:v3.prof(w1)});
+      prims.push({pts:w2,fill:'rgba(13,148,136,.28)',stroke:'rgba(13,148,136,.35)',lw:.5,d:v3.prof(w2)});
+    }
+  }
+  // cara de atrás (primera rebanada) y rebanada actual
+  const cara=(s,fill,stroke,lw)=>{ const rr=fila(s); if(d.up.v(s)-d.lo.v(s)<1e-9) return; const pts=[]; for(let j=0;j<=M;j++) pts.push(P0(s,rr[j])); for(let j=M;j>=0;j--) pts.push(P3(s,rr[j])); prims.push({pts,fill,stroke,lw,d:v3.prof(pts)}); };
+  if(st.t>0){ cara(d.a,'rgba(147,197,253,.35)','rgba(29,111,204,.5)',.8); cara(s0,'rgba(251,146,60,.88)','#c2410c',1.6); }
+  else cara(d.a,'rgba(251,146,60,.88)','#c2410c',1.6);
+  prims.sort((p,q)=>q.d-p.d);
+  prims.forEach(p=>v3.poligono(p.pts,p.fill,p.stroke,p.lw));
+  v3.rotularCaja();
+  // rótulo de la rebanada
+  const lo=d.lo.v(s0),up=d.up.v(s0), mid=P3(s0,(lo+up)/2), pm=v3.P(mid);
+  c.font='12px Outfit, sans-serif'; c.textAlign='left'; c.textBaseline='bottom'; c.lineWidth=3; c.strokeStyle='rgba(255,255,255,.9)';
+  const et=(o==='I'?'x = ':'y = ')+fmt(s0,2); c.strokeText(et,pm[0]+8,pm[1]-6); c.fillStyle='#c2410c'; c.fillText(et,pm[0]+8,pm[1]-6);
+  document.getElementById('nota3').textContent=(o==='I'?'Franjas verticales: cada rebanada tiene x fija':'Franjas horizontales: cada rebanada tiene y fija')+(st.vista==='perfil'&&o==='II'?' · vista desde y grande: x crece hacia la izquierda':'');
+}
+
+/* =====================================================================
+   CANVAS 2D: recinto y franja
+   ===================================================================== */
+function prep2(cv){ const dpr=window.devicePixelRatio||1,H=+cv.dataset.h||220,W=Math.max(200,Math.round(cv.clientWidth||cv.parentElement.clientWidth||400));
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); cv.style.height=H+'px'; const c=cv.getContext('2d'); c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H); return {c,W,H}; }
+function ejes2(c,W,H,rx,ry,mg,nomX,nomY){
+  const sx=v=>mg.l+(v-rx[0])/(rx[1]-rx[0])*(W-mg.l-mg.r), sy=v=>H-mg.b-(v-ry[0])/(ry[1]-ry[0])*(H-mg.t-mg.b);
+  c.strokeStyle='#e2e8f0'; c.lineWidth=1; c.font='10.5px Outfit, sans-serif'; c.fillStyle='#64748b';
+  const tx=escala(rx[0],rx[1],5), ty=escala(ry[0],ry[1],4);
+  tx.forEach(v=>{c.beginPath();c.moveTo(sx(v),mg.t);c.lineTo(sx(v),H-mg.b);c.stroke(); c.textAlign='center';c.textBaseline='top'; c.fillText(fmt(v),sx(v),H-mg.b+4);});
+  ty.forEach(v=>{c.beginPath();c.moveTo(mg.l,sy(v));c.lineTo(W-mg.r,sy(v));c.stroke(); c.textAlign='right';c.textBaseline='middle'; c.fillText(fmt(v),mg.l-5,sy(v));});
+  c.strokeStyle='#94a3b8'; c.lineWidth=1.2;
+  if(ry[0]<=0&&ry[1]>=0){c.beginPath();c.moveTo(mg.l,sy(0));c.lineTo(W-mg.r,sy(0));c.stroke();}
+  if(rx[0]<=0&&rx[1]>=0){c.beginPath();c.moveTo(sx(0),mg.t);c.lineTo(sx(0),H-mg.b);c.stroke();}
+  c.fillStyle='#334155'; c.font='italic 13px "STIX Two Text", serif'; c.textAlign='left'; c.textBaseline='bottom';
+  c.fillText(nomX,W-mg.r+6,H-mg.b+2); c.textAlign='left'; c.textBaseline='top'; c.fillText(nomY,mg.l+5,mg.t+1);
+  return {sx,sy};
+}
+function dibujar2D(){
+  const cv=document.getElementById('cv2'),{c,W,H}=prep2(cv), rec=st.rec,d=rec.desc[st.orden],o=st.orden;
+  const px=(rec.bx[1]-rec.bx[0])*0.12, py=(rec.by[1]-rec.by[0])*0.12;
+  const rx=[rec.bx[0]-px,rec.bx[1]+px], ry=[rec.by[0]-py,rec.by[1]+py], mg={l:34,r:26,t:34,b:24};
+  const {sx,sy}=ejes2(c,W,H,rx,ry,mg,'x','y');
+  // recinto
+  const NB=80; c.beginPath();
+  for(let i=0;i<=NB;i++){ const s=d.a+(d.b-d.a)*i/NB,p=punto(o,s,d.lo.v(s)); i?c.lineTo(sx(p[0]),sy(p[1])):c.moveTo(sx(p[0]),sy(p[1])); }
+  for(let i=NB;i>=0;i--){ const s=d.a+(d.b-d.a)*i/NB,p=punto(o,s,d.up.v(s)); c.lineTo(sx(p[0]),sy(p[1])); }
+  c.closePath(); c.fillStyle='rgba(191,219,254,.6)'; c.fill();
+  // curvas borde con rótulo
+  const curvas=(o==='I'&&rec.curvasI)?rec.curvasI:(o==='II'&&rec.curvasII)?rec.curvasII:rec.curvas;
+  const halo=(t,x,y,col)=>{c.font='italic 12.5px "STIX Two Text", serif';c.lineWidth=3;c.strokeStyle='rgba(255,255,255,.92)';c.strokeText(t,x,y);c.fillStyle=col;c.fillText(t,x,y);};
+  c.lineWidth=2;
+  curvas.forEach((cu,k)=>{ c.beginPath(); for(let i=0;i<=NB;i++){ const u=cu.r[0]+(cu.r[1]-cu.r[0])*i/NB; const X=cu.t==='y'?u:cu.f(u), Y=cu.t==='y'?cu.f(u):u; i?c.lineTo(sx(X),sy(Y)):c.moveTo(sx(X),sy(Y)); } c.strokeStyle=cu.c; c.stroke(); });
+  // franja actual
+  const s0=sActual(), lo=d.lo.v(s0), up=d.up.v(s0), ancho=8;
+  c.fillStyle='rgba(251,146,60,.45)'; c.strokeStyle='#c2410c'; c.lineWidth=2.2;
+  if(o==='I'){ c.fillRect(sx(s0)-ancho/2,sy(up),ancho,sy(lo)-sy(up)); c.beginPath(); c.moveTo(sx(s0),sy(lo)); c.lineTo(sx(s0),sy(up)); c.stroke(); }
+  else { c.fillRect(sx(lo),sy(s0)-ancho/2,sx(up)-sx(lo),ancho); c.beginPath(); c.moveTo(sx(lo),sy(s0)); c.lineTo(sx(up),sy(s0)); c.stroke(); }
+  // extremos de la franja
+  const e1=punto(o,s0,lo),e2=punto(o,s0,up);
+  c.fillStyle='#7c3aed'; c.beginPath(); c.arc(sx(e1[0]),sy(e1[1]),3.5,0,7); c.fill();
+  c.fillStyle='#0d9488'; c.beginPath(); c.arc(sx(e2[0]),sy(e2[1]),3.5,0,7); c.fill();
+  // rótulos de curvas (texto plano, en los extremos)
+  c.textBaseline='middle';
+  curvas.forEach((cu,k)=>{ if(!cu.lt) return; const u=cu.r[0]+(cu.r[1]-cu.r[0])*(cu.pos||0.7); const X=cu.t==='y'?u:cu.f(u), Y=cu.t==='y'?cu.f(u):u;
+    const t=cu.lt; c.font='italic 12.5px "STIX Two Text", serif'; const w=c.measureText(t).width; let tx_,ty_;
+    if(cu.t==='y'){ tx_=sx(X)-w/2; ty_=sy(Y)+(k?-10:11); } else { tx_=sx(X)+(k?8:-w-8); ty_=sy(Y); }
+    tx_=clamp(tx_,4,W-w-4); ty_=clamp(ty_,mg.t+8,H-mg.b-4); c.textAlign='left'; halo(t,tx_,ty_,cu.c); });
+  // rótulo de la franja
+  c.font='12px Outfit, sans-serif'; c.textAlign='center'; c.textBaseline='bottom';
+  const et=(o==='I'?'x = ':'y = ')+fmt(s0,2); let lx=o==='I'?sx(s0):sx((lo+up)/2), ly=o==='I'?sy(up)-5:sy(s0)-8;
+  c.lineWidth=3;c.strokeStyle='rgba(255,255,255,.92)';c.strokeText(et,lx,ly);c.fillStyle='#c2410c';c.fillText(et,lx,ly);
+}
+
+/* =====================================================================
+   CANVAS A(s): área de cada rebanada, acumulada
+   ===================================================================== */
+function dibujarA(){
+  const cv=document.getElementById('cvA'),{c,W,H}=prep2(cv), d=st.rec.desc[st.orden],o=st.orden,var_=o==='I'?'x':'y';
+  const Amax=Math.max(modelo.Amax,1e-9), top=Math.ceil(Amax*1.1*2)/2||1;
+  const rx=[d.a,d.b], ry=[0,top], mg={l:38,r:30,t:34,b:24};
+  const {sx,sy}=ejes2(c,W,H,rx,ry,mg,var_,'A('+var_+')');
+  const s0=sActual();
+  // área acumulada (sombreada)
+  c.beginPath(); c.moveTo(sx(d.a),sy(0));
+  const n=modelo.N; for(let i=0;i<=n;i++){ const s=d.a+modelo.h*i; if(s>s0) break; c.lineTo(sx(s),sy(modelo.A[i])); }
+  c.lineTo(sx(s0),sy(interp(modelo.A,s0))); c.lineTo(sx(s0),sy(0)); c.closePath(); c.fillStyle='rgba(251,146,60,.35)'; c.fill();
+  // curva A
+  c.beginPath(); for(let i=0;i<=n;i++){ const s=d.a+modelo.h*i; i?c.lineTo(sx(s),sy(modelo.A[i])):c.moveTo(sx(s),sy(modelo.A[i])); }
+  c.strokeStyle='#1d6fcc'; c.lineWidth=2; c.stroke();
+  // ordenada actual
+  const A0=interp(modelo.A,s0); c.strokeStyle='#c2410c'; c.lineWidth=2.2; c.beginPath(); c.moveTo(sx(s0),sy(0)); c.lineTo(sx(s0),sy(A0)); c.stroke();
+  c.fillStyle='#c2410c'; c.beginPath(); c.arc(sx(s0),sy(A0),3.5,0,7); c.fill();
+  c.font='11px Outfit, sans-serif'; c.textAlign='left'; c.textBaseline='bottom'; c.lineWidth=3; c.strokeStyle='rgba(255,255,255,.92)';
+  const et='A = '+fmt(A0,2); let lx=sx(s0)+6; const w=c.measureText(et).width; if(lx+w>W-4) lx=sx(s0)-w-6;
+  c.strokeText(et,lx,sy(A0)-4); c.fillText(et,lx,sy(A0)-4);
+  document.getElementById('capA').textContent='Área A de cada rebanada';
+}
+
+/* =====================================================================
+   PANELES
+   ===================================================================== */
+function panelDesc(){
+  const rec=st.rec,d=rec.desc[st.orden],o=st.orden,vs=o==='I'?'x':'y',vr=o==='I'?'y':'x';
+  const tipo=o==='I'?'<span class="chip">tipo I</span>':'<span class="chip II">tipo II</span>';
+  let h='<div class="pt">Planteo</div>';
+  h+='<div class="ln">Techo <span class="mi">'+st.techo.html+'</span> sobre '+rec.titulo+'. Descripción '+tipo+'</div>';
+  h+='<div class="md"><span class="nb">'+num(d.a)+OS('≤')+V(vs)+OS('≤')+num(d.b)+'</span><span class="gap"></span><span class="nb">'+d.lo.h+OS('≤')+V(vr)+OS('≤')+d.up.h+'</span></div>';
+  h+='<div class="md"><span class="nb">'+V('V')+OS('=')+INT2+fxy+D('A')+OS('=')+'</span><span class="nb">'+INT(num(d.a),num(d.b))+par(INT(d.lo.h,d.up.h)+fxy+D(vr))+D(vs)+'</span></div>';
+  if(rec.soloUna){ h+='<div class="ln small">Este recinto se describe de un solo tramo solo como '+rec.soloUna+'.</div>'; }
+  else if(Object.keys(rec.desc).length===2){ const otro=o==='I'?'II':'I', e=rec.desc[otro], vs2=otro==='I'?'x':'y', vr2=otro==='I'?'y':'x';
+    h+='<div class="ln small">También admite la otra descripción (<span class="mi">'+num(e.a)+OS('≤')+V(vs2)+OS('≤')+num(e.b)+'</span>, <span class="mi">'+e.lo.h+OS('≤')+V(vr2)+OS('≤')+e.up.h+'</span>): cambiá el corte y compará el volumen.</div>'; }
+  document.getElementById('pnlDesc').innerHTML=h;
+}
+function panelVal(){
+  const rec=st.rec,d=rec.desc[st.orden],o=st.orden,vs=o==='I'?'x':'y',vr=o==='I'?'y':'x',s0=sActual();
+  const lo=d.lo.v(s0),up=d.up.v(s0),A0=interp(modelo.A,s0),acum=interp(modelo.C,s0),Vt=modelo.V;
+  const s0h=num(s0), s0p=V(vs)+'<sub>0</sub>';
+  let h='<div class="pt">La rebanada actual</div>';
+  h+='<div class="ln">Posición: <span class="mi">'+s0p+OS('=')+s0h+'</span>. Límites de la franja:</div>';
+  const lS=d.lo.s(s0), uS=d.up.s(s0);
+  h+='<div class="md"><span class="nb">'+(lS?lS:d.lo.h)+'</span><span class="gap"></span><span class="nb">'+(uS?uS:d.up.h)+'</span></div>';
+  const fsub=o==='I'?V('f')+'('+s0h+'<span class="psc">;</span>'+V('y')+')':V('f')+'('+V('x')+'<span class="psc">;</span>'+s0h+')';
+  h+='<div class="ln">Área de la rebanada (integral de adentro):</div>';
+  h+='<div class="md"><span class="nb">'+V('A')+'('+s0h+')'+OS('=')+INT(num(lo),num(up))+fsub+D(vr)+OS('≈')+fmtN(A0)+'</span></div>';
+  h+='<div class="ln">Volumen acumulado desde <span class="mi">'+V(vs)+OS('=')+num(d.a)+'</span> hasta <span class="mi">'+s0p+'</span>:</div>';
+  h+='<div class="md"><span class="nb">'+INT(num(d.a),s0h)+V('A')+'('+V(vs)+')'+D(vs)+OS('≈')+fmtN(acum)+'</span></div>';
+  const ex=EXACTO[rec.id+'|'+st.techo.id];
+  h+='<div class="tot"><div><div class="k">volumen total</div><div class="v">'+V('V')+OS('=')+(ex?ex+OS('≈'):'')+fmtN(Vt)+'</div></div>';
+  h+='<div><div class="k">barrido</div><div class="v">'+fmtN(100*(Vt>0?acum/Vt:0),1)+' %</div></div></div>';
+  h+='<div class="barra"><div style="width:'+(Vt>0?100*acum/Vt:0)+'%"></div></div>';
+  document.getElementById('pnlVal').innerHTML=h;
+}
+
+/* =====================================================================
+   CONTROLES Y ANIMACIÓN
+   ===================================================================== */
+const selF=document.getElementById('selF'),selR=document.getElementById('selR'),rngT=document.getElementById('rngT'),rngV=document.getElementById('rngV'),btnPlay=document.getElementById('btnPlay');
+TECHOS.forEach(t=>{const op=document.createElement('option');op.value=t.id;op.textContent=t.nombre;selF.appendChild(op);});
+RECINTOS.forEach(r=>{const op=document.createElement('option');op.value=r.id;op.textContent=r.nombre;selR.appendChild(op);});
+selF.value=st.techo.id; selR.value=st.rec.id;
+function camara(){ // una cámara por corte: las rebanadas se ven de tres cuartos
+  if(st.vista==='3d'){ if(st.orden==='I'){v3.az=-0.95;v3.el=0.42;} else {v3.az=-2.0;v3.el=0.42;} }
+  else if(st.vista==='arriba'){ v3.az=0; v3.el=1.5; }
+  else { if(st.orden==='I'){v3.az=-Math.PI/2;v3.el=0.03;} else {v3.az=Math.PI;v3.el=0.03;} } }
+function refrescarOrden(){ const seg=document.getElementById('segO'); const tiene=st.rec.desc;
+  seg.querySelectorAll('button').forEach(b=>{ const k=b.dataset.orden; b.disabled=!tiene[k]; b.classList.toggle('on',k===st.orden); }); }
+function recalcular(){ if(!st.rec.desc[st.orden]) st.orden=Object.keys(st.rec.desc)[0]; refrescarOrden(); armarModelo(); panelDesc(); camara(); redibujar(); }
+function redibujar(){ dibujar3D(); dibujar2D(); dibujarA(); panelVal(); rngT.value=Math.round(st.t*1000); }
+v3.alMover=()=>{ st.vista='libre'; document.querySelectorAll('[data-vista]').forEach(b=>b.classList.remove('on')); dibujar3D(); };
+document.addEventListener('change',e=>{
+  if(e.target===selF){ st.techo=TECHOS.find(t=>t.id===selF.value); recalcular(); }
+  if(e.target===selR){ st.rec=RECINTOS.find(r=>r.id===selR.value); recalcular(); }
+});
+document.addEventListener('input',e=>{
+  if(e.target===rngT){ st.t=+rngT.value/1000; parar(); redibujar(); }
+  if(e.target===rngV){ st.vel=+rngV.value; }
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-orden]'); if(b&&!b.disabled){ st.orden=b.dataset.orden; st.t=0; parar(); recalcular(); return; }
+  const a=e.target.closest('[data-act]'); if(a){ if(a.dataset.act==='play'){ st.play?parar():arrancar(); } else { parar(); st.t=0; redibujar(); } return; }
+  const v=e.target.closest('[data-vista]'); if(v){ st.vista=v.dataset.vista; document.querySelectorAll('[data-vista]').forEach(x=>x.classList.toggle('on',x===v)); camara(); dibujar3D(); }
+});
+let raf=null,ult=0;
+function arrancar(){ if(st.t>=1) st.t=0; st.play=true; btnPlay.textContent='❚❚ Pausar'; ult=performance.now(); raf=requestAnimationFrame(paso); }
+function parar(){ st.play=false; btnPlay.textContent='▶ Animar'; if(raf) cancelAnimationFrame(raf); raf=null; }
+function paso(now){ if(!st.play) return; const dt=Math.min(0.05,(now-ult)/1000); ult=now;
+  st.t=Math.min(1,st.t+dt*(0.025+0.045*st.vel)); redibujar(); if(st.t>=1){ parar(); return; } raf=requestAnimationFrame(paso); }
+let rz=null; window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(redibujar,120); });
+recalcular();
+
+/* =====================================================================
+   AUTOTEST (consola): volumen numérico vs. exacto para todas las combinaciones
+   ===================================================================== */
+(function autotest(){
+  const guard={techo:st.techo,rec:st.rec,orden:st.orden}; let ok=0,tot=0,fallas=[];
+  RECINTOS.forEach(r=>TECHOS.forEach(f=>Object.keys(r.desc).forEach(o=>{ st.techo=f;st.rec=r;st.orden=o; armarModelo(); tot++;
+    const ex=EXACTO_NUM[r.id+'|'+f.id], err=Math.abs(modelo.V-ex)/ex; if(err<2e-3) ok++; else fallas.push(r.id+' '+f.id+' '+o+': '+modelo.V.toFixed(4)+' vs '+ex.toFixed(4)); })));
+  st.techo=guard.techo;st.rec=guard.rec;st.orden=guard.orden; armarModelo();
+  document.body.dataset.autotest=ok+'/'+tot; if(fallas.length) console.warn('autotest',fallas); else console.log('autotest volúmenes '+ok+'/'+tot+' ok');
+})();
+})();
+</script>
+</body>
+</html>
